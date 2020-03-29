@@ -23,7 +23,7 @@ from core.yolov3 import YOLOv3, decode, compute_loss
 from core.config import cfg
 
 trainset = Dataset('train')
-logdir = "./data/log"
+logdir = "./ix-tut-yolov3-data/logs"
 steps_per_epoch = len(trainset)
 global_steps = tf.Variable(1, trainable=False, dtype=tf.int64)
 warmup_steps = cfg.TRAIN.WARMUP_EPOCHS * steps_per_epoch
@@ -60,8 +60,8 @@ def train_step(image_data, target):
 
         gradients = tape.gradient(total_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        tf.print("=> STEP %4d   lr: %.6f   giou_loss: %4.2f   conf_loss: %4.2f   "
-                 "prob_loss: %4.2f   total_loss: %4.2f" %(global_steps, optimizer.lr.numpy(),
+        tf.print("=> STEP %4d/%4d   lr: %.6f   giou_loss: %4.2f   conf_loss: %4.2f   "
+                 "prob_loss: %4.2f   total_loss: %4.2f" %(global_steps, total_steps, optimizer.lr.numpy(),
                                                           giou_loss, conf_loss,
                                                           prob_loss, total_loss))
         # update learning rate
@@ -83,10 +83,10 @@ def train_step(image_data, target):
             tf.summary.scalar("loss/prob_loss", prob_loss, step=global_steps)
         writer.flush()
 
-print(f"train {cfg.TRAIN.EPOCHS}")
+print(f"train {total_steps} steps with {cfg.TRAIN.EPOCHS} epochs...")
 for epoch in range(cfg.TRAIN.EPOCHS):
     print(f"train {epoch}...")
     for image_data, target in trainset:
         train_step(image_data, target)
-    model.save_weights("./yolov3")
+    model.save_weights("./starwars_yolov3")
 

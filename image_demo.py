@@ -40,7 +40,7 @@ for i, fm in enumerate(feature_maps):
     bbox_tensors.append(bbox_tensor)
 
 model = tf.keras.Model(input_layer, bbox_tensors)
-model.load_weights("./yolov3")
+model.load_weights("./starwars_yolov3")
 #model.summary()
 
 pred_bbox = model.predict(image_data)
