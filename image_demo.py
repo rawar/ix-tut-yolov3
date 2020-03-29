@@ -63,6 +63,7 @@ for bbox in bboxes:
 
 image = utils.draw_bbox(original_image, bboxes)
 image = Image.fromarray(image)
-image.show()
+image.save("./test9-box.jpg")
+#image.show()
 
 
