@@ -20,7 +20,7 @@ from core.config import cfg
 from PIL import Image
 
 input_size   = 416
-image_path   = "./test9.jpg"
+image_path   = "./tests/test9.jpg"
 NUM_CLASS    = len(utils.read_class_names(cfg.YOLO.CLASSES))
 CLASSES      = utils.read_class_names(cfg.YOLO.CLASSES)
 
