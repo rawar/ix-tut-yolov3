@@ -16,13 +16,12 @@ import numpy as np
 import core.utils as utils
 import tensorflow as tf
 from core.yolov3 import YOLOv3, decode
-from core.config import cfg
 from PIL import Image
 
 input_size   = 416
 image_path   = "./tests/test9.jpg"
-NUM_CLASS    = len(utils.read_class_names(cfg.YOLO.CLASSES))
-CLASSES      = utils.read_class_names(cfg.YOLO.CLASSES)
+CLASSES      = ["r2d2","c3po","luke-skywalker","obi-wan-kinobi","sturmtruppler"]
+NUM_CLASS    = len(CLASSES)
 
 input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
 feature_maps = YOLOv3(input_layer)
@@ -47,8 +46,8 @@ pred_bbox = model.predict(image_data)
 
 pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
 pred_bbox = tf.concat(pred_bbox, axis=0)
-bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, cfg.TEST.SCORE_THRESHOLD)
-bboxes = utils.nms(bboxes, cfg.TEST.IOU_THRESHOLD, method='nms')
+bboxes = utils.postprocess_boxes(pred_bbox, original_image_size, input_size, 0.3)
+bboxes = utils.nms(bboxes, 0.45, method='nms')
 
 for bbox in bboxes:
     print(bbox)
@@ -61,9 +60,9 @@ for bbox in bboxes:
     bbox_mess = ' '.join([class_name, score, xmin, ymin, xmax, ymax]) + '\n'
     print('\t' + str(bbox_mess).strip())
 
-image = utils.draw_bbox(original_image, bboxes)
+image = utils.draw_bbox(original_image, bboxes, classes=CLASSES)
 image = Image.fromarray(image)
-image.save("./test9-box.jpg")
-#image.show()
+#image.save("./test9-box.jpg")
+image.show()
 
 
