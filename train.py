@@ -92,7 +92,7 @@ for epoch in range(cfg.TRAIN.EPOCHS):
 
     model_json = model.to_json()
     with open("starwars_yolov3.json", "w") as json_file:
-        json_file.write(model_json)
+        json_file.write(model_json)
 
     model.save_weights("./starwars_yolov3")
 
