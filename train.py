@@ -88,9 +88,11 @@ for epoch in range(cfg.TRAIN.EPOCHS):
     print(f"train {epoch}...")
     for image_data, target in trainset:
         train_step(image_data, target)
+    
+
     model_json = model.to_json()
-    with open("model.json", "w") as json_file:
-    json_file.write(model_json)
+    with open("starwars_yolov3.json", "w") as json_file:
+        json_file.write(model_json)
 
     model.save_weights("./starwars_yolov3")
 
