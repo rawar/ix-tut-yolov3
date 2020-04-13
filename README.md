@@ -67,7 +67,7 @@ laden und mit Hilfe des Magic-Kommandos
 
 <pre>
 %tensorboard --logdir /content/ix-tut-yolov3/ix-tut-yolov3-data/logs/
-<&pre>
+</pre>
 
 laden und anzeigen. 
 
