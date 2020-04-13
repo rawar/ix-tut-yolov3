@@ -31,7 +31,6 @@ __C.YOLO.IOU_LOSS_THRESH      = 0.5
 
 # Train options
 __C.TRAIN                     = edict()
-
 __C.TRAIN.ANNOT_PATH          = "./ix-tut-yolov3-data/datasets/starwars_train.txt"
 __C.TRAIN.BATCH_SIZE          = 8
 # __C.TRAIN.INPUT_SIZE            = [320, 352, 384, 416, 448, 480, 512, 544, 576, 608]
@@ -40,7 +39,7 @@ __C.TRAIN.DATA_AUG            = True
 __C.TRAIN.LR_INIT             = 1e-3
 __C.TRAIN.LR_END              = 1e-6
 __C.TRAIN.WARMUP_EPOCHS       = 2
-__C.TRAIN.EPOCHS              = 10
+__C.TRAIN.EPOCHS              = 50
 
 
 
