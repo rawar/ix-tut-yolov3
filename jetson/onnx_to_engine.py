@@ -1,10 +1,5 @@
-from __future__ import print_function
-
 import numpy as np
 import tensorrt as trt
-import pycuda.driver as cuda
-import pycuda.autoinit
-import utils
 import os
 import common
 

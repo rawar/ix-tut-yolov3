@@ -5,12 +5,9 @@ import time
 
 import tensorrt as trt
 from PIL import Image
-import cv2
-import pycuda.driver as cuda
-import pycuda.autoinit
 import numpy as np
 import common
-import utils
+import img_utils
 
 
 # some helper functions
@@ -124,7 +121,9 @@ def reshape_output(output, num_classes):
 def process_outputs(trt_outputs, num_classes, resolution_raw, input_shape, conf_th):
     outputs_reshaped = list()
     for trt_output in trt_outputs:
+        print(f"trt_output shape={trt_output.shape}")
         reshaped = reshape_output(trt_output, num_classes)
+        print(f"reshaped shape = {reshaped.shape}")
         outputs_reshaped.append(reshaped)
 
     pred_bbox = np.concatenate(outputs_reshaped, axis=0)
@@ -141,7 +140,7 @@ def main():
     engine_file_path = 'models/starwars_yolov3_fp16.trt'
 
     # read class labels frim file
-    all_classes = utils.load_label_classes(label_file_path)
+    all_classes = img_utils.load_label_classes(label_file_path)
     num_classes = len(all_classes)
     new_width = 416
     new_height = 416
@@ -149,8 +148,8 @@ def main():
     # input_layer  = tf.keras.layers.Input([input_size, input_size, 3])
     input_shape = (new_width, new_height)
 
-    image_raw, image_resized = utils.load_and_resize(new_width, new_height, input_image_path)
-    image_processed = utils.shuffle_and_normalize(image_resized)
+    image_raw, image_resized = img_utils.load_and_resize(new_width, new_height, input_image_path)
+    image_processed = img_utils.shuffle_and_normalize(image_resized)
 
     width, height = image_raw.size
     resolution_raw = (height, width)

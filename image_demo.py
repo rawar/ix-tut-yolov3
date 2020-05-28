@@ -11,6 +11,7 @@
 #
 #================================================================
 
+import time
 import cv2
 import numpy as np
 import core.utils as utils
@@ -42,7 +43,9 @@ model = tf.keras.Model(input_layer, bbox_tensors)
 model.load_weights("./starwars_yolov3")
 model.summary()
 
+inference_start_time = time.time()
 pred_bbox = model.predict(image_data)
+print("tf.keras Erkennungszeit: {} ms".format(int(round((time.time() - inference_start_time) * 1000))))
 
 pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
 pred_bbox = tf.concat(pred_bbox, axis=0)
