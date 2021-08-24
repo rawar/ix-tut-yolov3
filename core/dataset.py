@@ -155,7 +155,7 @@ class Dataset(object):
         return image, bboxes
 
     def parse_annotation(self, annotation):
-        line = annotation.rsplit(" ", 1)
+        line = annotation.split(" ")
         image_path = line[0]
 
         if not os.path.exists(image_path):
